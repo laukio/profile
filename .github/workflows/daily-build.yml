@@ -1,0 +1,58 @@
+name: Daily Build
+
+on:
+  schedule:
+    - cron: '0 21 * * *'
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 4  # KEEP+1, ensures enough history for squashing
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.24'
+
+      - name: Set Timezone
+        run: sudo timedatectl set-timezone Asia/Shanghai
+
+      - name: Install Sing-Box
+        run: |
+          bash <(curl -fsSL https://sing-box.app/deb-install.sh)
+
+      - name: Generate Rule file
+        run: |
+          sing-box version
+          go run main.go
+
+      - name: Set env variables
+        run: echo "GEN_MSG=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Commit & Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status -s)" ]; then
+            git add .
+            git commit -m "${{ env.GEN_MSG }}"
+
+            # Keep only the last 3 commits
+            KEEP=3
+            TOTAL=$(git rev-list --count HEAD)
+            if [ $TOTAL -gt $KEEP ]; then
+              SQUASH_SHA=$(git rev-list HEAD --skip=$((KEEP-1)) --max-count=1)
+              NEW_ROOT=$(git commit-tree "${SQUASH_SHA}^{tree}" -m "squashed history")
+              git rebase --onto $NEW_ROOT $SQUASH_SHA HEAD
+            fi
+
+            git push -f origin HEAD:master
+          fi

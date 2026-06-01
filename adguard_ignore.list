@@ -3,7 +3,7 @@
 ! Description: Filter composed of several other filters (AdGuard Base filter, Social media filter, Tracking Protection filter, Mobile ads filter, EasyList, EasyPrivacy, etc) and simplified specifically to be better compatible with DNS-level ad blocking.
 ! Homepage: https://github.com/AdguardTeam/AdguardSDNSFilter
 ! License: https://github.com/AdguardTeam/AdguardSDNSFilter/blob/master/LICENSE
-! Last modified: 2026-05-31T20:29:18.450Z
+! Last modified: 2026-06-01T22:46:07.408Z
 !
 ! Compiled by @adguard/hostlist-compiler v2.1.0
 !
@@ -1655,8 +1655,8 @@ wykop.pl$badfilter
 # A hosts file that aims to get rid of ads, tracking, scams & badware on (mostly) Swedish websites
 # ----
 # title:          Frellwit's Swedish Hosts File
-# last updated:   2026-05-21 05:52:59 CEST
-# entries:        1154
+# last updated:   2026-06-01 10:43:37 CEST
+# entries:        1152
 # format:         hosts (hosts -- in hosts file format)
 # homepage:       https://github.com/lassekongo83/Frellwits-filter-lists/
 !
@@ -1699,8 +1699,8 @@ wykop.pl$badfilter
 !
 ! Title: hostsVN
 ! Description: The filter contains ad and tracking networks in Vietnam.
-! Last modified: 29 May 2026 13:53 UTC+7
-! Version: 2605291353
+! Last modified: 01 Jun 2026 16:45 UTC+7
+! Version: 2606011645
 ! Blocked: 845 rules
 ! Expires: 1 days (update frequency)
 ! Homepage: https://bigdargon.github.io/hostsVN/
@@ -1718,8 +1718,8 @@ wykop.pl$badfilter
 !
 ! Title: hostsVN Threat
 ! Description: Only include threat domains
-! Last modified: 29 May 2026 13:53 UTC+7
-! Version: 2605291353
+! Last modified: 01 Jun 2026 16:45 UTC+7
+! Version: 2606011645
 ! Blocked: 4.862 rules
 ! Expires: 1 days (update frequency)
 ! Homepage: https://bigdargon.github.io/hostsVN/
@@ -1994,6 +1994,9 @@ analytics-*.aasaam.com
 ! Source name: Exception rules
 ! Source: Filters/exceptions.txt
 !
+! https://github.com/AdguardTeam/AdGuardSDNSFilter/issues/2058
+! Blocked by CNAME data.adobedc.net
+@@||data.notify.macys.com^|
 ! https://github.com/AdguardTeam/AdGuardSDNSFilter/issues/
 @@||om-ssl.consorsbank.de^|
 ! taboolanews.com
